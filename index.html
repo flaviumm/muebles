@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Madera</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+      "yjs": "https://esm.sh/yjs@13.6.20",
+      "y-webrtc": "https://esm.sh/y-webrtc@10.3.0?external=yjs"
+    } }
+  </script>
+</head>
+<body>
+  <aside id="panel">
+    <header class="brand">
+      <strong>Madera</strong>
+      <input id="name" aria-label="Nombre del proyecto" />
+    </header>
+
+    <section>
+      <h2>Plantilla</h2>
+      <div id="templates" class="tpl"></div>
+    </section>
+    <section>
+      <h2>Medidas</h2>
+      <div id="f-size"></div>
+    </section>
+    <section>
+      <h2>Interior</h2>
+      <label class="check"><input type="checkbox" id="iron" /> Estructura de hierro (industrial)</label>
+      <div id="f-inside"></div>
+      <label class="check"><input type="checkbox" id="doors" /> Puertas</label>
+    </section>
+    <section>
+      <h2>Terminación</h2>
+      <div class="finish"><span>Cuerpo</span><div id="sw-body" class="swatches"></div></div>
+      <div class="finish"><span>Frentes</span><div id="sw-front" class="swatches"></div></div>
+    </section>
+    <section>
+      <h2>Imagen de referencia</h2>
+      <input type="file" id="refFile" accept="image/*" />
+      <div id="refTools" hidden>
+        <label class="field"><span>Opacidad</span><input type="range" id="refOpacity" min="0.1" max="1" step="0.05" value="0.5"></label>
+        <button id="refAI" class="on">Diseñar desde la foto (IA)</button>
+        <p id="refNotes" class="muted" hidden></p>
+        <button id="refFit">Ajustar ancho a la foto</button>
+        <button id="refDel">Quitar</button>
+        <p class="muted">Recortá la foto al contorno del mueble. Se superpone en vista Frente con el alto total: ajustá medidas, columnas y estantes hasta que coincidan.</p>
+      </div>
+    </section>
+  </aside>
+
+  <main>
+    <div id="viewport">
+      <div class="toolbar">
+        <div class="seg" role="group" aria-label="Vista">
+          <button data-view="3d" class="on">3D</button>
+          <button data-view="front">Frente</button>
+        </div>
+        <button id="explode" class="toggle">Despiece</button>
+        <button id="hideFronts" class="toggle">Ocultar frentes</button>
+        <span class="grow"></span>
+        <button id="save">Guardar</button>
+        <button id="open">Proyectos</button>
+        <button id="share">Compartir</button>
+        <button id="png">PNG</button>
+        <button id="print">Imprimir</button>
+        <button id="collab">Colaborar</button>
+        <span id="peers" hidden></span>
+      </div>
+      <div id="info" hidden></div>
+    </div>
+
+    <div id="reports">
+      <nav class="tabs">
+        <button data-tab="cuts" class="on">Cortes</button>
+        <button data-tab="sheets">Placas</button>
+        <button data-tab="budget">Presupuesto</button>
+        <span class="grow"></span>
+        <button id="csv">Exportar CSV</button>
+      </nav>
+      <div id="tab-cuts" class="tab"></div>
+      <div id="tab-sheets" class="tab" hidden></div>
+      <div id="tab-budget" class="tab" hidden></div>
+    </div>
+  </main>
+
+  <dialog id="projects">
+    <header><h2>Mis proyectos</h2><button value="close" formmethod="dialog" onclick="this.closest('dialog').close()">Cerrar</button></header>
+    <ul id="project-list"></ul>
+  </dialog>
+  <div id="toast" role="status"></div>
+  <article id="printout"></article>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
